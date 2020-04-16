@@ -540,6 +540,9 @@ public class TagContainerLayout extends ViewGroup {
     }
 
     private void onAddTag(String text, int position) {
+        onAddTag(text, position, null);
+    }
+    private void onAddTag(String text, int position, Runnable block) {
         if (position < 0 || position > mChildViews.size()) {
             throw new RuntimeException("Illegal position!");
         }
@@ -549,6 +552,7 @@ public class TagContainerLayout extends ViewGroup {
         } else {
             tagView = new TagView(getContext(), text);
         }
+        tagView.setBlock(block);
         initTagView(tagView, position);
         mChildViews.add(position, tagView);
         if (position < mChildViews.size()) {
@@ -807,9 +811,13 @@ public class TagContainerLayout extends ViewGroup {
      * @param text
      */
     public void addTag(String text) {
-        addTag(text, mChildViews.size());
+        addTag(text, null);
     }
 
+    public void addTag(String text, Runnable block) {
+        addTag(text, mChildViews.size(), block);
+    }
+    
     /**
      * Inserts the specified TagView into this ContainerLayout at the specified location.
      * The TagView is inserted before the current element at the specified location.
@@ -818,7 +826,11 @@ public class TagContainerLayout extends ViewGroup {
      * @param position
      */
     public void addTag(String text, int position) {
-        onAddTag(text, position);
+        addTag(text, position, null);
+    }
+    
+    public void addTag(String text, int position, Runnable block) {
+        onAddTag(text, position, block);
         postInvalidate();
     }
 
