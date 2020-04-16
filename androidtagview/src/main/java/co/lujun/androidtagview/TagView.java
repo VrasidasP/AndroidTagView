@@ -44,6 +44,11 @@ import static co.lujun.androidtagview.Utils.dp2px;
  */
 public class TagView extends View {
 
+    private Runnable block;
+    public void setBlock(Runnable _block) {
+        this.block = _block;
+    }
+    
     /** Border width*/
     private float mBorderWidth;
 
@@ -337,7 +342,10 @@ public class TagView extends View {
 
                 case MotionEvent.ACTION_UP:
                     isUp = true;
-                    if (!isExecLongClick && !isMoved) {
+                    if(block != null) {
+                        block.run();
+                    }
+                    else if (!isExecLongClick && !isMoved) {
                         mOnTagClickListener.onTagClick((int) getTag(), getText());
                     }
                     break;
