@@ -342,11 +342,14 @@ public class TagView extends View {
 
                 case MotionEvent.ACTION_UP:
                     isUp = true;
-                    if(block != null) {
-                        block.run();
-                    }
-                    else if (!isExecLongClick && !isMoved) {
-                        mOnTagClickListener.onTagClick((int) getTag(), getText());
+                    
+                    if (!isExecLongClick && !isMoved) {
+                        if(block != null) {
+                            block.run();
+                        }
+                        else {
+                            mOnTagClickListener.onTagClick((int) getTag(), getText());
+                        }
                     }
                     break;
             }
