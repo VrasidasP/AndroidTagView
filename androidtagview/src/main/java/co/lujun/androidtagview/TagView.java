@@ -312,7 +312,7 @@ public class TagView extends View {
         }
         if (isEnableCross() && isClickCrossArea(event) && mOnTagClickListener != null){
             if (action == MotionEvent.ACTION_UP) {
-                mOnTagClickListener.onTagCrossClick((int) getTag());
+                mOnTagClickListener.onTagCrossClick((int) getTag(), getText());
             }
             return true;
         }else if (isViewClickable && mOnTagClickListener != null){
@@ -557,7 +557,7 @@ public class TagView extends View {
         void onTagClick(int position, String text);
         void onTagLongClick(int position, String text);
         void onSelectedTagDrag(int position, String text);
-        void onTagCrossClick(int position);
+        void onTagCrossClick(int position, String text);
     }
 
     public int getTextDirection() {
